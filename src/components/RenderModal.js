@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { useAtom } from "jotai";
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { addUserProduct } from "../endpoints";
 import { postRequestLoggedIn } from "../functions/apiClient";
 import { prodData } from "../store";
@@ -25,6 +25,7 @@ const RenderModal = ({ open, setOpen }) => {
       setErrorModal(true);
     }
   };
+  const Navigate = useNavigate();
 
   return (
     <Grid>

@@ -13,7 +13,7 @@ const CarouselComp = ({ imageFile, deleteHandler, showDeleteButton }) => {
     >
       {imageFile.map((file) => (
         <Item
-          file={showDeleteButton ? file : file?.productImage}
+          file={showDeleteButton ? file : file?.productImage || file.image}
           deleteHandler={deleteHandler}
           showDeleteButton={showDeleteButton}
         />

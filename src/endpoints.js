@@ -15,4 +15,8 @@ export const myTransactions = (date) => {
   else return "/getTransactions.php";
 };
 export const getProductBCData = (token) =>
-  `https://warranty-backend.onrender.com/get-token-data/?token=${token}`;
+  `/getTokenDetails.php/?token=${token}`;
+export const addUserProductToken = "/addUserProductToken.php";
+export const productListFromBC = "/userProductListWithToken.php";
+export const customerPrdctDetByPrdctId = (productId) =>
+  `/customerPrdctDetByPrdctId.php?productId=${productId}`;

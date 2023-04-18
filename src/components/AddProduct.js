@@ -122,15 +122,17 @@ const AddProduct = () => {
       //setAddProductsData([...addProductsData, data]);
       const responseMint = await mintHandler(warrantyContract);
       const tokenId = parseInt(responseMint?.events[0]?.args?.tokenId._hex, 16);
-      if (!tokenId) {
-        setStart(false);
-        return;
-      }
+      // if (!tokenId) {
+      //   setStart(false);
+      //   return;
+      // }
+      console.log("response mint", responseMint);
       const dataResp = await addDataClickHandler(
         warrantyContract,
         tokenId,
         JSON.stringify(data)
       );
+      console.log("data response.....", dataResp);
 
       const resp = await getMetaData(warrantyContract, tokenId);
       let productData = JSON.parse(resp);

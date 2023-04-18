@@ -24,8 +24,15 @@ import {
   getRequestLoggedIn,
   postRequestLoggedIn,
 } from "../functions/apiClient";
-import { addEditProduct, getProductBCData } from "../endpoints";
+import {
+  addEditProduct,
+  addUserProductToken,
+  getProductBCData,
+} from "../endpoints";
 import QRScanner from "./QRScanner";
+import RupeeIcon from "@mui/icons-material/CurrencyRupee";
+import { Switch } from "@material-ui/core";
+import SuccessModal from "./SuccessModal";
 
 const productDetails = {
   locationOfPurchase: "",
@@ -34,6 +41,7 @@ const productDetails = {
 
 const AddProduct = () => {
   const [base64Image, setBase64Image] = useState([]);
+  const [checked, setChecked] = useState(false);
   const [QRScannerState, setQRScannerState] = useState(false);
   const hiddenFileInput = React.useRef(null);
   const [tokenId] = useAtom(tokenIdState);
@@ -44,22 +52,48 @@ const AddProduct = () => {
   const [addProductData, setAddProductData] = useState({});
   const [purchaseDate, setpurchaseDate] = useState(null);
   const [expirationDate, setExpirationDate] = useState(null);
+  const [successModal, setSucessModal] = useState(false);
   const [warrantyContract] = useAtom(warrantyContractState);
   const [start, setStart] = useState(false);
   const [resState, setRes] = useState(false);
-  const [showLoader, setShowLoader] = useState(false);
+  const [razorRes, setRazorRes] = useState("");
 
+  const [showLoader, setShowLoader] = useState(false);
+  const [addPr, setAddPr] = useState(false);
+  let payload = {};
   const getProdDetails = async () => {
     if (tokenId) {
       setShowLoader(true);
       const resp = await getRequestLoggedIn(getProductBCData("6"), true);
       setShowLoader(false);
-      setRes(resp);
+      if (resp.statusCode === "200") setRes(resp.data);
     }
   };
+  const handleChangeFun = () => {
+    setChecked(!checked);
+  };
+
   useEffect(() => {
     getProdDetails();
   }, [tokenId]);
+  const postProductDatainBC = async (data) => {
+    const res = await postRequestLoggedIn(addUserProductToken, data, true);
+    if (res.status_code === "200") {
+      setAddPr(true);
+    }
+    return res;
+  };
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+  const openPayModal = (options) => {
+    var rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
   const productValidation = Yup.object().shape({
     locationOfPurchase: Yup.string()
       .required("Location Of Purchase is Required")
@@ -79,6 +113,27 @@ const AddProduct = () => {
       initialValues: productDetails,
       validationSchema: productValidation,
       onSubmit: async (data) => {
+        payload = {
+          productId: resState.productId,
+          tokenId: "6" || tokenId || "6",
+          transaction: "Assigned token to customer",
+          CustomerEmailId: data.userEmail,
+          LocationofPurchase: data.locationOfPurchase,
+          userDigitalId: "1234567890",
+          DateofPurchase: today,
+          price: "10000",
+          transactionId: razorRes,
+          transactionType: checked ? "1" : "2",
+          warrantyEndDate: expDate(Number(resState.warranty[0].duration)),
+          quantity: "1",
+        };
+        if (checked) openPayModal(options);
+        else {
+          const res = await postProductDatainBC(payload);
+          if (res.status_code === "200") setSucessModal(true);
+        }
+
+        console.log("data to be added in bc");
         setButtonClicked(true);
         if (!(purchaseDate && expirationDate)) {
         } else {
@@ -94,6 +149,7 @@ const AddProduct = () => {
             tokenId,
             JSON.stringify(data)
           );
+          console.log("data to be added in bc", dataResp);
 
           const resp = await getMetaData(warrantyContract, tokenId);
           let productData = JSON.parse(resp);
@@ -124,11 +180,40 @@ const AddProduct = () => {
 
   const modalClose = () => {
     setStart(false);
-    Navigate("/ProductList");
+    Navigate("/ProductListNew");
   };
   const today = moment(moment.now()).format("DD-MM-YYYY");
   const expDate = (duration) =>
     moment(moment.now()).add(duration, "months").format("DD-MM-YYYY");
+  const options = {
+    key: "rzp_test_eqYzhY3qydcfV7",
+    amount: "1000000",
+    name: "Ritesh Shop",
+    description: "some description",
+    image: "https://cdn.razorpay.com/logos/7K3b6d18wHwKzL_medium.png",
+    handler: async function (response) {
+      if (response) {
+        setRazorRes(response.razorpay_payment_id);
+      }
+      const postRes = await postProductDatainBC(payload);
+      if (postRes.status_code === "200") {
+        setSucessModal(true);
+        console.log("payment done successfully");
+      }
+    },
+    prefill: {
+      name: "Gaurav",
+      contact: "9999999999",
+      email: "demo@demo.com",
+    },
+    notes: {
+      address: "some address",
+    },
+    theme: {
+      color: "#F37254",
+      hide_topbar: false,
+    },
+  };
   return (
     <Grid sx={{ width: "100%", padding: "20px" }}>
       {start && (
@@ -256,6 +341,30 @@ const AddProduct = () => {
                       {resState.productId}
                     </Grid>
                   </Grid>
+                  <Grid container sx={{ width: "100%" }} spacing={2}>
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{
+                        fontWeight: "700",
+                        display: "flex",
+                        //justifyContent: "flex-end",
+                      }}
+                    >
+                      Product Price :
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Grid container alignItems="center">
+                        <Grid item>
+                          <RupeeIcon />
+                        </Grid>
+                        <Grid item>
+                          <strong>10000</strong>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
                   <Grid container sx={{ width: "100%" }} spacing={2}>
                     <Grid
                       item
@@ -416,6 +525,61 @@ const AddProduct = () => {
                   label="Customer Email Id"
                 />
               </Stack>
+              <Grid
+                container
+                sx={{
+                  width: "100%",
+                  padding: "20px 0",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "baseline",
+                }}
+                spacing={2}
+              >
+                <Grid
+                  item
+                  xs={6}
+                  sx={{
+                    fontWeight: "700",
+                    display: "flex",
+                    //justifyContent: "flex-end",
+                  }}
+                >
+                  Payment Option :
+                </Grid>
+                <Grid item xs={6}>
+                  <Grid container alignItems="center">
+                    <Grid item>
+                      <Switch
+                        checked={checked}
+                        onChange={handleChangeFun}
+                        name="toggleButton"
+                        color="primary"
+                      />
+                    </Grid>
+                    <Grid item>
+                      <Typography sx={{ fontWeight: "700" }}>
+                        {checked ? "Online Mode" : "Offline Mode"}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid>
+              <SuccessModal
+                open={successModal}
+                handleClose={() => {
+                  window.location.href = "/ProductList";
+                }}
+                message={
+                  checked
+                    ? "Payment was successful"
+                    : "Product was added successfully"
+                }
+                subMessage="Please reach out for any assistance"
+                secondButtonText="Close"
+              />
             </Grid>
 
             <Grid sx={{ paddingTop: "20px", width: "100%", margin: "auto" }}>
@@ -424,12 +588,11 @@ const AddProduct = () => {
                 size="large"
                 type="submit"
                 variant="contained"
-                onClick={() => {
-                  setButtonClicked(true);
-                }}
                 style={{ padding: "10px", borderRadius: "25px" }}
               >
-                Add Details
+                {checked
+                  ? "Continue to Pay Online"
+                  : "Collect cash and create Sale"}
               </LoadingButton>
             </Grid>
           </>

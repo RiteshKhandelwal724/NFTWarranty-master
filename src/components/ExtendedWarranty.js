@@ -87,7 +87,9 @@ const ExtendedWarranty = () => {
         JSON.stringify(bodyData)
       );
       let tokenAssigned = {};
-      if (resp) {
+      if (!resp) {
+        return setOpen(false);
+      } else {
         tokenAssigned = JSON.parse(
           await getMetaData(warrantyContract, tokenId)
         );
@@ -102,7 +104,6 @@ const ExtendedWarranty = () => {
             setTransactionId(resData?.transactionID);
           }
         }
-      } else {
       }
     },
     prefill: {

@@ -19,6 +19,10 @@ import Dashboard from "./components/Dashboard";
 import Transactions from "./components/MyTransactions";
 import Web3Login from "./components/Web3Login";
 import GoogleLogin from "./components/GoogleLogin";
+import ProductListNew from "./components/ProductListNew";
+import RegisterProductNew from "./components/RegisterProductNew";
+
+import ProductDescriptionNew from "./components/ProductDescriptionNew";
 
 class Routing extends React.Component {
   render() {
@@ -59,7 +63,6 @@ class Routing extends React.Component {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/AboutUs"
@@ -71,7 +74,6 @@ class Routing extends React.Component {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/Profile"
@@ -82,7 +84,28 @@ class Routing extends React.Component {
           }
         />
         <Route exact path="/authorize" element={<GoogleLogin />} />
-
+        <Route
+          exact
+          path="/RegisteredProductsNew"
+          element={
+            <ProtectedRoute>
+              <WarrantySolutions>
+                <ProductListNew />
+              </WarrantySolutions>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/RegisterProductNew"
+          element={
+            <ProtectedRoute>
+              <WarrantySolutions>
+                <RegisterProductNew />
+              </WarrantySolutions>
+            </ProtectedRoute>
+          }
+        />
         <Route
           exact
           path="/RegisteredProducts"
@@ -113,24 +136,22 @@ class Routing extends React.Component {
         />
         <Route
           exact
+          path="/ProductDescriptionNew"
+          element={
+            <ProtectedRoute>
+              <ConnectBlockChain />
+              <ProductDescriptionNew />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
           path="/AddProduct"
           element={
             <ProtectedRoute>
               <WarrantySolutions>
                 <ConnectBlockChain />
                 <AddProduct />
-              </WarrantySolutions>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          exact
-          path="/AddProductNew"
-          element={
-            <ProtectedRoute>
-              <WarrantySolutions>
-                <ConnectBlockChain />
-                <AddProductNew />
               </WarrantySolutions>
             </ProtectedRoute>
           }
@@ -157,7 +178,6 @@ class Routing extends React.Component {
             </ProtectedRoute>
           }
         />
-
         <Route
           exact
           path="/CreateTokens"
@@ -182,7 +202,30 @@ class Routing extends React.Component {
             </ProtectedRoute>
           }
         />
-
+        <Route
+          exact
+          path="/ProductListNew"
+          element={
+            <ProtectedRoute>
+              <WarrantySolutions>
+                <ConnectBlockChain />
+                <ProductListNew />
+              </WarrantySolutions>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          exact
+          path="/AddProductNew"
+          element={
+            <ProtectedRoute>
+              <WarrantySolutions>
+                <ConnectBlockChain />
+                <AddProductNew />
+              </WarrantySolutions>
+            </ProtectedRoute>
+          }
+        />
         <Route
           render={function () {
             return <h1>Not Found</h1>;

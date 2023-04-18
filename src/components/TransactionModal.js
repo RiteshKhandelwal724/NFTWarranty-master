@@ -88,7 +88,7 @@ const TransactionModal = ({ response, setStart, buttonText, modalClose }) => {
                           }}
                         >
                           <a
-                            href={`https://goerli.etherscan.io/tx/${domData?.transactionHash}`}
+                            href={`https://sepolia.etherscan.io/tx/${domData?.transactionHash}`}
                             target="_blank"
                             rel="noreferrer"
                           >

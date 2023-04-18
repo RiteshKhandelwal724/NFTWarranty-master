@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import { useAtom } from "jotai";
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 import { addUserProduct } from "../endpoints";
 import { postRequestLoggedIn } from "../functions/apiClient";
 import { prodData } from "../store";
@@ -31,7 +32,7 @@ const RenderModal = ({ open, setOpen }) => {
       <SuccessModal
         open={successModal}
         handleClose={() => {
-          window.location.reload(true);
+          Navigate("/RegisteredProducts");
         }}
         message="Warranty Activation is Successful"
         subMessage="Please reach out for any assistance"

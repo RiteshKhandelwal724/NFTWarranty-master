@@ -29,6 +29,7 @@ export const ProtectedRoute = (props) => {
   const allowedRoutesForCustomer = [
     "/",
     "/RegisterProduct",
+    "/RegisterProductNew",
     "/RegisteredProducts",
     "/RegisteredProductsNew",
     "/ExtendedWarranty",
@@ -39,7 +40,7 @@ export const ProtectedRoute = (props) => {
     "/MyTransactions",
     "/LoginAuth",
     "/authorize",
-    "ProductListNew",
+    "/ProductListNew",
   ];
   useEffect(() => {
     sessionStorage.setItem("previousPath", window.location.pathname);

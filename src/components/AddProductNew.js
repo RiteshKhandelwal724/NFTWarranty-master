@@ -570,7 +570,7 @@ const AddProduct = () => {
               <SuccessModal
                 open={successModal}
                 handleClose={() => {
-                  window.location.href = "/ProductList";
+                  window.location.href = "/ProductListNew";
                 }}
                 message={
                   checked

@@ -53,7 +53,7 @@ const CreateTokens = () => {
     });
   const modalClose = () => {
     setStart(false);
-    Navigate("/AddProduct");
+    Navigate("/AddProductNew");
   };
 
   return (

@@ -145,7 +145,7 @@ const ExtendedWarranty = () => {
 
   const pathHandler = () => {
     setOpen(false);
-    Navigate("/RegisteredProducts");
+    Navigate("/RegisteredProductsNew");
   };
   const handleClose = () => setOpen(false);
   const expDateRaw = productData?.warrantyPeriod;
@@ -160,7 +160,7 @@ const ExtendedWarranty = () => {
           response={responseState}
           modalClose={() => {
             setOpen(false);
-            Navigate("/RegisteredProducts");
+            Navigate("/RegisteredProductsNew");
           }}
           buttonText="Go to My Registered Warranty's"
         />

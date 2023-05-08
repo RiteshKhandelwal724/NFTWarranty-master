@@ -26,7 +26,6 @@ const RenderModal = ({ open, setOpen }) => {
     }
   };
   const Navigate = useNavigate();
-
   return (
     <Grid>
       <ErrorModal open={errorModal} setOpen={setErrorModal} />

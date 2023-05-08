@@ -277,7 +277,7 @@ export default function MainNavigation() {
                   <ListItemButton
                     onClick={() => {
                       if (profile?.userRole === "2") {
-                        reDirection("/RegisterProduct");
+                        reDirection("/RegisterProductNew");
                       } else reDirection("/Dashboard");
                     }}
                   >
@@ -304,7 +304,7 @@ export default function MainNavigation() {
                   {profile.userRole === "2" && (
                     <ListItemButton
                       onClick={() => {
-                        reDirection("/RegisteredProducts");
+                        reDirection("/RegisteredProductsNew");
                       }}
                     >
                       <ListItemIcon>
@@ -362,7 +362,7 @@ export default function MainNavigation() {
                       </ListItemButton>
                       <ListItemButton
                         onClick={() => {
-                          reDirection("/AddProduct");
+                          reDirection("/AddProductNew");
                         }}
                       >
                         <ListItemIcon>
@@ -375,7 +375,7 @@ export default function MainNavigation() {
                       </ListItemButton>
                       <ListItemButton
                         onClick={() => {
-                          reDirection("/ProductList");
+                          reDirection("/ProductListNew");
                         }}
                       >
                         <ListItemIcon>

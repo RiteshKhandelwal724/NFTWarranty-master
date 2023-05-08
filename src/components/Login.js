@@ -76,7 +76,7 @@ export default function LoginComp() {
               .startsWith("/ProductDescription")
           ) {
             Navigate(sessionStorage.getItem("previousPath"));
-          } else Navigate("/RegisterProduct");
+          } else Navigate("/RegisterProductNew");
         } else Navigate("/Dashboard");
       } else if (res.statusCode === "400") {
         console.log("error");
@@ -153,7 +153,9 @@ export default function LoginComp() {
       }}
     >
       {currentStep === "1" &&
-        (role === "1" ? Navigate("/Dashboard") : Navigate("/RegisterProduct"))}
+        (role === "1"
+          ? Navigate("/Dashboard")
+          : Navigate("/RegisterProductNew"))}
       <Container maxWidth="sm">
         <ContentStyle>
           <Typography

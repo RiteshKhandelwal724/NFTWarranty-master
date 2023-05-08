@@ -55,7 +55,7 @@ const ProductList = () => {
       <Grid item>
         <Link
           variant="subtitle2"
-          to="/AddProduct"
+          to="/AddProductNew"
           component={RouterLink}
           sx={{ fontSize: "30px", textDecoration: "none" }}
         >

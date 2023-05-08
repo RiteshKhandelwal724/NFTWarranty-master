@@ -780,7 +780,7 @@ function Dashboard() {
                       </Grid>
                       <Grid item>
                         <NavLink
-                          to="/AddProduct"
+                          to="/AddProductNew"
                           style={{
                             marginLeft: "3vw",
                             marginRight: "3vw",

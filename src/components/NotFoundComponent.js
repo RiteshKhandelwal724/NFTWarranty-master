@@ -52,7 +52,7 @@ const NotFoundPage = () => {
                 onClick={() => {
                   profile?.userRole === "1"
                     ? Navigate("/Dashboard")
-                    : Navigate("/RegisterProduct");
+                    : Navigate("/RegisterProductNew");
                 }}
               >
                 Navigate to Dashboard

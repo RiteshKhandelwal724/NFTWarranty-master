@@ -203,7 +203,7 @@ const AddProduct = () => {
 
   const modalClose = () => {
     setStart(false);
-    Navigate("/ProductList");
+    Navigate("/ProductListNew");
   };
   return (
     <Grid sx={{ padding: "20px" }}>

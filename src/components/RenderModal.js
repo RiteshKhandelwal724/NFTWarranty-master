@@ -32,7 +32,7 @@ const RenderModal = ({ open, setOpen }) => {
       <SuccessModal
         open={successModal}
         handleClose={() => {
-          Navigate("/RegisteredProducts");
+          Navigate("/RegisteredProductsNew");
         }}
         message="Warranty Activation is Successful"
         subMessage="Please reach out for any assistance"

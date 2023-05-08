@@ -65,7 +65,7 @@ const LoginForm = ({ setToken }) => {
                   .startsWith("/ProductDescription")
               ) {
                 Navigate(sessionStorage.getItem("previousPath"));
-              } else Navigate("/RegisterProduct");
+              } else Navigate("/RegisterProductNew");
             } else Navigate("/Dashboard");
           } else if (res.statusCode === "400") {
             setModalView(true);

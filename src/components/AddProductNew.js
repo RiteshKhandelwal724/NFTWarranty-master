@@ -341,7 +341,7 @@ const AddProduct = () => {
                       Product Id :
                     </Grid>
                     <Grid item xs={6}>
-                      {resState.productId}
+                      {resState.product}
                     </Grid>
                   </Grid>
                   <Grid container sx={{ width: "100%" }} spacing={2}>

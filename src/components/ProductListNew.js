@@ -122,6 +122,10 @@ const ProductList = () => {
           console.log(res, "res");
           setProdDetails(res?.data);
         };
+        const warrantyMockObj = [
+          { coverage_type: "Hardware", duration: "6" },
+          { coverage_type: "Software", duration: "12" },
+        ];
 
         return (
           <Accordion
@@ -173,8 +177,12 @@ const ProductList = () => {
                       </Grid>
                       <Grid item xs={1} />
 
-                      <Grid item xs={5}>
-                        {prodDetails?.productId}
+                      <Grid
+                        item
+                        xs={5}
+                        sx={{ maxWidth: "300px", wordBreak: "break-word" }}
+                      >
+                        {prodDetails?.product}
                       </Grid>
                     </Grid>
                   </Grid>
@@ -238,9 +246,10 @@ const ProductList = () => {
                   >
                     Warranty Coverage
                   </Typography>
-
-                  {prodDetails?.warranty?.length &&
-                    prodDetails?.warranty.map((item) => {
+                  {
+                    // prodDetails?.warranty?.length &&
+                    // prodDetails?.warranty.map((item) => {
+                    warrantyMockObj.map((item) => {
                       return (
                         <Grid item>
                           <Grid item sx={{ width: "100%" }}>
@@ -283,7 +292,8 @@ const ProductList = () => {
                           </Grid>
                         </Grid>
                       );
-                    })}
+                    })
+                  }
                 </Grid>
               </Grid>
             </AccordionDetails>

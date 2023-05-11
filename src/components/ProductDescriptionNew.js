@@ -26,13 +26,15 @@ const ProductDescription = () => {
   const Navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
-  const expDateRaw = productDetails?.warrantyPeriod;
+  const expDateRaw = productDetails?.warrantyDetails[0].warrantyPeriod;
   const expDate = dateFormat(expDateRaw);
-  const dateOfPurchaseRaw = productDetails?.dateOfPurchase;
+  const dateOfPurchaseRaw =
+    productDetails.warrantyDetails[0]?.warrantyStartDate;
   const dateOfPurchase = dateFormat(dateOfPurchaseRaw);
+  console.log("productDetails", productDetails);
   const today = moment(new Date(), "DD/MM/YYYY");
   const b = moment(today, "DD-MM-YYYY");
-  const a = moment(expDate, "DD-MM-YYYY");
+  const a = moment(expDateRaw, "DD-MM-YYYY");
   //Difference in number of days
   const years = a.diff(b, "year");
   b.add(years, "years");
@@ -60,7 +62,7 @@ const ProductDescription = () => {
       customerPrdctDetByPrdctId(productIdParam)
     );
     if (dataResponse?.statusCode === "200") {
-      setProductDetails(dataResponse?.productList[0]);
+      setProductDetails(dataResponse?.productDetails[0]);
       //   setProductImages(dataResponse?.productImages);
       setVerifyWarranty(dataResponse?.productDetails?.activateWarrantyFlag);
     }
@@ -99,8 +101,12 @@ const ProductDescription = () => {
               </Grid>
 
               <Grid item xs={1}></Grid>
-              <Grid item xs={5}>
-                {productDetails.productId}
+              <Grid
+                item
+                xs={5}
+                sx={{ maxWidth: "400px", wordBreak: "break-word" }}
+              >
+                {productDetails.productDetails.productId}
               </Grid>
             </Grid>
           </Grid>
@@ -112,7 +118,7 @@ const ProductDescription = () => {
 
               <Grid item xs={1}></Grid>
               <Grid item xs={5}>
-                {dateOfPurchase}
+                {dateOfPurchaseRaw}
               </Grid>
             </Grid>
           </Grid>
@@ -125,7 +131,8 @@ const ProductDescription = () => {
 
               <Grid item xs={1}></Grid>
               <Grid item xs={5}>
-                {productDetails.locatioOfPurchase}
+                {productDetails.warrantyDetails[0].locatioOfPurchase ||
+                  "Hyderabad"}
               </Grid>
             </Grid>
           </Grid>
@@ -137,7 +144,7 @@ const ProductDescription = () => {
 
               <Grid item xs={1}></Grid>
               <Grid item xs={5}>
-                {expDate}
+                {expDateRaw}
               </Grid>
             </Grid>
           </Grid>
@@ -148,7 +155,8 @@ const ProductDescription = () => {
               </Grid>
               <Grid item xs={1}></Grid>
               <Grid item xs={5}>
-                {productDetails.typeOfWarrantyCoverage}
+                {productDetails.warrantyDetails[0].typeOfWarrantyCoverage ||
+                  "Hardware"}
               </Grid>
             </Grid>
           </Grid>

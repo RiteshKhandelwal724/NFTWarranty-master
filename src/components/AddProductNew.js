@@ -55,7 +55,7 @@ const AddProduct = () => {
   const [successModal, setSucessModal] = useState(false);
   const [warrantyContract] = useAtom(warrantyContractState);
   const [start, setStart] = useState(false);
-  const [resState, setRes] = useState(false);
+  const [resState, setRes] = useState();
   const [razorRes, setRazorRes] = useState("");
 
   const [showLoader, setShowLoader] = useState(false);
@@ -107,6 +107,7 @@ const AddProduct = () => {
       .email("Email must be a valid email address")
       .required("Email is required"),
   });
+  console.log("resState", resState);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -114,7 +115,7 @@ const AddProduct = () => {
       validationSchema: productValidation,
       onSubmit: async (data) => {
         payload = {
-          productId: resState.productId,
+          productId: resState.product,
           tokenId: "6" || tokenId || "6",
           transaction: "Assigned token to customer",
           CustomerEmailId: data.userEmail,
@@ -124,12 +125,14 @@ const AddProduct = () => {
           price: "10000",
           transactionId: razorRes,
           transactionType: checked ? "1" : "2",
-          warrantyEndDate: expDate(Number(resState.warranty[0].duration)),
+          // warrantyEndDate: expDate(Number(resState.warranty[0].duration)),
           quantity: "1",
         };
         if (checked) openPayModal(options);
         else {
+          setShowLoader(true);
           const res = await postProductDatainBC(payload);
+          setShowLoader(false);
           if (res.status_code === "200") setSucessModal(true);
         }
 

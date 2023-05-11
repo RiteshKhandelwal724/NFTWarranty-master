@@ -29,9 +29,9 @@ const LoginForm = () => {
   const productSchema = Yup.object().shape({
     productNumber: Yup.string()
       .required("Product Serial Number is required")
-      .min(7, "Product Serial Number should have 7 characters")
-      .max(18, "Product Serial Number should have 18 characters")
-      .matches(/^[a-zA-Z0-9]*$/, "Must not contain any alphanumeric character"),
+      .min(7, "Product Serial Number should have minimum of 7 characters")
+      .max(22, "Product Serial Number should have maxiumum of 22characters"),
+    // .matches(/^[a-zA-Z0-9]*$/, "Must not contain any alphanumeric character"),
   });
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -45,9 +45,9 @@ const LoginForm = () => {
         console.log("dataResponse", dataResponse);
         try {
           if (dataResponse?.statusCode === "200") {
-            setProduct(dataResponse.productList[0]);
+            setProduct(dataResponse.productDetails[0]);
             Navigate(
-              `/ProductDescriptionNew?productId=${dataResponse?.productList[0].productId}`
+              `/ProductDescriptionNew?productId=${dataResponse?.productDetails[0].productDetails.productId}`
             );
           } else {
             setOpen(true);

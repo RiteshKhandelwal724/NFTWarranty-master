@@ -41,7 +41,7 @@ const QRScanner = ({ noRedirect }) => {
       {!qRUrl?.text && (
         <QrReader
           constraints={{ video: { facingMode: "environment" } }}
-          Media
+          media
           delay={delay}
           style={previewStyle}
           onError={handleError}

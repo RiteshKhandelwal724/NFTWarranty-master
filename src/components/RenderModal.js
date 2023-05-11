@@ -16,7 +16,7 @@ const RenderModal = ({ open, setOpen }) => {
   const onClickHandler2 = async () => {
     try {
       const res = await postRequestLoggedIn(addUserProduct, {
-        productId: productData.productSerialNumber,
+        productId: productData.productDetails.productId,
       });
       if (res?.status_code === "200") {
         setSuccessModal(true);

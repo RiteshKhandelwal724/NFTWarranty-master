@@ -57,6 +57,7 @@ const ProductDescription = () => {
       : days + " days"
     : "";
   const duration = yearsDate + monthsDate + daysDate;
+  console.log("activateWarranty", verifyWarranty);
   const fetchProdDetails = async () => {
     const dataResponse = await getRequestLoggedIn(
       customerPrdctDetByPrdctId(productIdParam)
@@ -64,7 +65,9 @@ const ProductDescription = () => {
     if (dataResponse?.statusCode === "200") {
       setProductDetails(dataResponse?.productDetails[0]);
       //   setProductImages(dataResponse?.productImages);
-      setVerifyWarranty(dataResponse?.productDetails?.activateWarrantyFlag);
+      setVerifyWarranty(
+        dataResponse?.productDetails[0]?.productDetails?.activateWarrantyFlag
+      );
     }
   };
   useEffect(() => {
